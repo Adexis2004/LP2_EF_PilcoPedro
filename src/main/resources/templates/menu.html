@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<title>Menú de Productos</title>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+		integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+	<link rel="stylesheet" href="/path/to/your/css/styles.css">
+	<link rel="icon" type="image/jpg" href="img/favicon.ico">
+	<style>
+		body::before {
+			content: "";
+			background-image: url('img/fd.jpg');
+			background-size: cover;
+			background-position: center;
+			background-repeat: no-repeat;
+			filter: blur(5px);
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			z-index: -1;
+		}
+
+		.container {
+			background-color: rgba(255, 255, 255, 0.9);
+			padding: 30px;
+			border-radius: 20px;
+			box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
+			margin-top: 50px;
+		}
+
+		.nombre-usuario {
+			font-size: 28px;
+			color: #4a4a4a;
+			font-weight: bold;
+			margin-bottom: 20px;
+		}
+
+		.cerrar-sesion {
+			text-align: right;
+			margin-bottom: 20px;
+		}
+
+		.tabla-productos {
+			margin-top: 20px;
+		}
+
+		.buscar-form {
+			margin-bottom: 20px;
+		}
+
+		.btn-custom {
+			background-color: #5A9;
+			color: white;
+			border: none;
+		}
+
+		.btn-custom:hover {
+			background-color: #477;
+			color: white;
+		}
+
+		.table th,
+		.table td {
+			vertical-align: middle;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="container">
+		<div class="row mt-3">
+			<div class="col-md-12 text-center nombre-usuario">
+				Bienvenido <span th:text="${nombre_usuario}"></span>
+			</div>
+		</div>
+		<a class='nav-link dropdown' data-bs-toggle='dropdown' href='#' role='button' aria-expanded='false'>
+			<img th:src="${'/usuario_foto/' + foto}" alt="Profile" style="width: 50px; height: 50px; object-fit: cover;"
+				class="profile-pic">
+		</a>
+		<div class="row cerrar-sesion">
+			<div class="col-md-12">
+				<a href="/logout" class="btn btn-secondary">Cerrar sesión</a>
+			</div>
+		</div>
+
+		<div class="row buscar-form">
+			<div class="col-md-12">
+				<form th:action="@{/productos/buscar}" method="get" class="form-inline">
+					<div class="form-group me-2">
+						<label for="idProducto" class="me-2">Buscar por ID: </label>
+						<input type="text" class="form-control" id="idProducto" name="idProducto">
+					</div>
+					<button type="submit" class="btn btn-primary">Buscar</button>
+				</form>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-md-12 text-end">
+				<button onclick="window.location.href='/productos/agregar'" class="btn btn-custom me-2">Agregar
+					producto</button>
+				<button onclick="window.location.href='/categorias/agregar'" class="btn btn-custom me-2">Agregar
+					categoría</button>
+				<button onclick="window.location.href='/generar_pdf'" class="btn btn-custom">Generar PDF</button>
+			</div>
+		</div>
+
+		<div class="row mt-3 tabla-productos">
+			<div class="col-md-12">
+				<table class="table table-hover table-striped table-bordered">
+					<thead class="thead-dark">
+						<tr>
+							<th>ID</th>
+							<th>Nombre producto</th>
+							<th>Precio</th>
+							<th>Stock</th>
+							<th>Categoría</th>
+							<th>Acción</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="producto : ${productos}">
+							<td th:text="${producto.idProducto}"></td>
+							<td th:text="${producto.nombreProducto}"></td>
+							<td th:text="${'S/'+producto.precio}"></td>
+							<td th:text="${producto.stock}"></td>
+							<td th:text="${producto.categoriaEntity.descripcion}"></td>
+							<td class="text-center">
+								<a th:href="@{/productos/detalles/{id}(id=${producto.idProducto})}"
+									class="btn btn-info btn-sm">Ver Detalles</a>
+								<a th:href="@{/productos/editar/{id}(id=${producto.idProducto})}"
+									class="btn btn-warning btn-sm">Editar</a>
+								<a th:href="@{/productos/eliminar/{id}(id=${producto.idProducto})}"
+									class="btn btn-danger btn-sm"
+									onclick="return confirm('¿Estás seguro de eliminar este producto?')">Eliminar</a>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+
+	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+</body>
+
+</html>

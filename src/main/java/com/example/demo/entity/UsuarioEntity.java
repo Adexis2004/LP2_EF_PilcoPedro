@@ -42,4 +42,9 @@ public class UsuarioEntity {
 
     @Column(name = "fecha_nacimiento", nullable = false)
     private LocalDate fecnac;
+    
+
+    private String urlImagen;
+    
+    
 }

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Registrar Categoría</title>
+	 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <link rel="icon" type="image/jpg" href="/img/favicon.ico">
+    <style>
+        body::before {
+            content: "";
+            background-image: url('/img/fd.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            filter: blur(5px);
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1; 
+        }
+
+        .container {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 30px;
+            border-radius: 20px;
+            margin-top: 50px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+        }
+
+        h2 {
+            color: #007bff;
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            font-weight: bold;
+        }
+
+        .btn-custom {
+            background-color: #007bff;
+            color: white;
+            border: none;
+        }
+
+        .btn-custom:hover {
+            background-color: #0056b3;
+            color: white;
+        }
+
+        .btn-secondary-custom {
+            background-color: #6c757d;
+            border-color: #6c757d;
+        }
+
+        .btn-secondary-custom:hover {
+            background-color: #5a6268;
+            border-color: #545b62;
+        }
+
+        .nombre-usuario {
+            font-size: 24px;
+            color: #333;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <h2>Registrar Nueva Categoría</h2>
+            </div>
+        </div>
+
+        <div class="row mt-3">
+            <div class="col-md-12 text-center nombre-usuario">
+                Bienvenido <span th:text="${nombre_usuario}"></span>
+            </div>
+        </div>
+
+        <div class="row mt-1">
+            <div class="col-md-12 text-end">
+                <a href="/logout" class="btn btn-secondary-custom">Cerrar sesión</a>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <form th:action="@{/categorias/registrar}" th:object="${categoria}" method="post">
+                    <div class="form-group">
+                        <label for="descripcion">Descripción:</label>
+                        <input type="text" th:field="*{descripcion}" class="form-control" id="descripcion" placeholder="Ingrese la descripción de la categoría">
+                        <div th:if="${#fields.hasErrors('descripcion')}" class="text-danger">
+                            <p th:errors="*{descripcion}">Descripción Error</p>
+                        </div>
+                    </div>
+                    <div class="text-center mt-4">
+                        <button type="submit" class="btn btn-custom">Registrar</button>
+                        <a th:href="@{/menu}" class="btn btn-secondary-custom">Cancelar</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+</body>
+
+</html>
